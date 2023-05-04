@@ -1,0 +1,2 @@
+require './chitter'
+run Chitter

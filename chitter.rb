@@ -11,4 +11,8 @@ class Chitter < Sinatra::Base
     #also_reload lib/account_repository
   end
 
+  get '/' do
+    return erb(:welcome_page)
+  end
+
 end
