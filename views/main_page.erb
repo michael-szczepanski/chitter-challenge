@@ -1,17 +1,28 @@
-<h1>Welcome to Chitter</h1>
+<html>
+  <head></head>
 
-<h2>Post to Chitter:</h2>
-<form method="POST" action="/new_peep">
-<input type="text" name="content" placeholder="Tell us what is on your mind">
-<input type="submit" name="Post to Chitter">
+  <style>
+    div {
+      border-color: black;
+      border-style: solid;
+      border-width: 1px;
+    }
+  </style>
 
-<h2>See what people are talking about:</h2>
-  <% for peep in @peeps %>
-    <div>
-      <%= peep.time %><br>
-      <!-- TODO: implement a way to retrieve account name from id -->
-      <%= peep.account_id %><br>
-      <%= @accounts[peep.account_id] %><br>
-      <%= peep.content %>
-    <div>
-  <% end %>
+  <body>
+    <h1>Welcome to Chitter</h1>
+
+    <h2>Post to Chitter:</h2>
+    <form method="POST" action="/new_peep">
+    <input type="text" name="content" placeholder="Tell us what is on your mind">
+    <input type="submit" name="Post to Chitter">
+
+    <h2>See what people are talking about:</h2>
+      <% for peep in @peeps %>
+        <%= peep.time %><br>
+        <%= @accounts[peep.account_id] %><br>
+        <div><%= peep.content %></div><br>
+      <% end %>
+  </body>
+
+</html>
