@@ -4,6 +4,7 @@ require_relative './lib/database_connection'
 require_relative './lib/peep'
 require_relative './lib/peep_repository'
 require_relative './lib/account_repository'
+require_relative './lib/account'
 
 DatabaseConnection.connect
 
@@ -31,12 +32,20 @@ class Chitter < Sinatra::Base
   end
 
   post '/new_peep' do
+    peep_repo = PeepRepository.new
     time = Time.now
     content = params[:content]
     peep = Peep.new(time, content, settings.user_id)
-    peep_repo = PeepRepository.new
     peep_repo.add(peep)
 
     redirect '/'
+  end
+
+  post '/new_user' do
+    account_repo = AccountRepository.new
+    @account = Account.new(params[:name], params[:email], params[:username], params[:password])
+    account_repo.create(@account)
+
+    erb(:new_user_created)
   end
 end

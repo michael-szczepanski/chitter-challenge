@@ -14,4 +14,14 @@ class AccountRepository
     end
     return users
   end
+
+  def create(account)
+    # Takes an Account object as an argument
+    # Adds the relevant object into the database
+    # Returns nothing
+    query = "INSERT INTO accounts (name, email, username, password) VALUES ($1, $2, $3, $4)"
+    params = [account.name, account.email, account.username, account.password]
+    DatabaseConnection.exec_params(query, params)
+  end
+  
 end

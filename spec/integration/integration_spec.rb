@@ -46,4 +46,12 @@ RSpec.describe Chitter do
       expect(response.body).to include('name="name"')
     end
   end
+
+  context 'POST /new_user' do
+    it 'adds a new user to the database' do
+      response = post('/new_user', { name: 'Kevin', email: 'kevin@kevin.com', username: 'kevin', password: 'kevin' })
+      expect(response.status).to eq 200
+      expect(response.body).to include('Welcome to the Chitter gang, Kevin!')
+    end
+  end
 end
