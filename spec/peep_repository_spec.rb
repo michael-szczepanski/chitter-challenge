@@ -8,7 +8,7 @@ RSpec.describe PeepRepository do
   context 'CREATE' do
     it 'adds a new Peep to database' do
       repo = PeepRepository.new
-      peep = double time:'2023-05-05 11:53:11', content:'henlo', account_id:1
+      peep = double time: '2023-05-05 11:53:11', content: 'henlo', account_id: 1
       repo.add(peep)
       peeps = repo.list_peeps
       expect(peeps.first.time).to eq Time.parse('2023-05-05 11:53:11')

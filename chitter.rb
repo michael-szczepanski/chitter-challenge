@@ -18,9 +18,8 @@ class Chitter < Sinatra::Base
     peep_repo = PeepRepository.new
     account_repo = AccountRepository.new
     @peeps = peep_repo.list_peeps
-    @accounts = account_repo.get_id_user_pairs
+    @accounts = account_repo.read_id_user_pairs
     
-
     return erb(:main_page)
   end
 

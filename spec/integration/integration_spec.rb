@@ -25,7 +25,7 @@ RSpec.describe Chitter do
 
   context 'POST /new_peep' do
     it 'adds a post to the database' do
-      response = post('/new_peep', { content:'New post' })
+      response = post('/new_peep', { content: 'New post' })
       expect(response.status).to eq 302
       response = get('/')
       expect(response.status).to eq 200
@@ -33,4 +33,7 @@ RSpec.describe Chitter do
       expect(response.body).to include('Anonymous')
     end
   end
+
+  context 'GET /sign-up' do
+    
 end

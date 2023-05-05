@@ -16,6 +16,13 @@ class PeepRepository
     query = "SELECT id, time, content, account_id FROM peeps"
     params = []
     entries = DatabaseConnection.exec_params(query, params)
+    peeps = extract_peeps(entries)
+    return peeps.reverse
+  end
+
+  private 
+  
+  def extract_peeps(entries)
     peeps = []
     for entry in entries do
       time = Time.parse(entry['time'])
@@ -25,6 +32,7 @@ class PeepRepository
       peep.id = entry['id'].to_i
       peeps << peep
     end
-    return peeps.reverse
+    return peeps
   end
+
 end

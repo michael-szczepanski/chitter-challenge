@@ -8,7 +8,7 @@ RSpec.describe AccountRepository do
   context 'READ' do
     it 'returns a hash of id=>name pairs for accounts' do
       repo = AccountRepository.new
-      users = repo.get_id_user_pairs
+      users = repo.read_id_user_pairs
       expect(users[1]).to eq 'Anonymous'
       expect(users[2]).to eq 'Mike'
     end

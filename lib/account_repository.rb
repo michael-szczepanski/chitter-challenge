@@ -1,5 +1,5 @@
 class AccountRepository
-  def get_id_user_pairs
+  def read_id_user_pairs
     # Takes no arguments
     # Returns a hash of id=>name pairs for accounts
     query = "SELECT id, name FROM accounts"

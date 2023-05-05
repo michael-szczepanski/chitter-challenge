@@ -2,10 +2,16 @@
   <head></head>
 
   <style>
-    div {
+    span {
+      line-height: 1.5;
+    }
+
+    .simpleborder {
       border-color: black;
       border-style: solid;
       border-width: 1px;
+      margin: 5px;
+      padding: 2px;
     }
   </style>
 
@@ -19,9 +25,9 @@
 
     <h2>See what people are talking about:</h2>
       <% for peep in @peeps %>
-        <%= peep.time %><br>
-        <%= @accounts[peep.account_id] %><br>
-        <div><%= peep.content %></div><br>
+        <span><%= peep.time %></span><br>
+        <span class="simpleborder"><%= @accounts[peep.account_id] %></span><br>
+        <div class="simpleborder"><%= peep.content %></div><br>
       <% end %>
   </body>
 
