@@ -16,6 +16,8 @@ CREATE TABLE IF NOT EXISTS peeps (
   constraint fk_accounts foreign key(account_id) references accounts(id) on delete cascade
 );
 
+TRUNCATE TABLE accounts, peeps;
+
 INSERT INTO accounts
 (name, username, email, password) VALUES
 ('Anonymous', NULL, NULL, NULL),
@@ -24,5 +26,5 @@ INSERT INTO accounts
 
 INSERT INTO peeps
 (time, content, account_id) VALUES
-('2023-05-04 12:45:12', 'Mike post', 1),
-('2023-05-05 11:55:43', 'Ruby post', 2);
+('2023-05-04 12:45:12', 'Mikes peep', 1),
+('2023-05-05 11:55:43', 'Rubys peep', 2);

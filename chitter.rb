@@ -3,6 +3,7 @@ require 'sinatra/reloader'
 require_relative './lib/database_connection'
 require_relative './lib/peep'
 require_relative './lib/peep_repository'
+require_relative './lib/account_repository'
 
 DatabaseConnection.connect
 
@@ -14,13 +15,19 @@ class Chitter < Sinatra::Base
   end
 
   get '/' do
+    peep_repo = PeepRepository.new
+    account_repo = AccountRepository.new
+    @peeps = peep_repo.list_peeps
+    @accounts = account_repo.list_names
+    
+
     return erb(:main_page)
   end
 
   post '/new_peep' do
     @time = Time.now
     @content = params[:content]
-    @account_id = params[:account_id].to_i
+    @account_id = 1
     peep = Peep.new(@time, @content, @account_id)
 
     peep_repo = PeepRepository.new

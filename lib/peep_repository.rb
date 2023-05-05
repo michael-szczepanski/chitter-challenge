@@ -1,4 +1,4 @@
-require 'peep'
+require_relative './peep'
 
 class PeepRepository
   def add(peep)
@@ -8,5 +8,23 @@ class PeepRepository
     params = [peep.time, peep.content, peep.account_id]
     DatabaseConnection.exec_params(query, params)
     return nil
+  end
+
+  def list_peeps
+    # Takes no arguments
+    # Returns an array of Peep objects in reverse id order
+    query = "SELECT id, time, content, account_id FROM peeps"
+    params = []
+    entries = DatabaseConnection.exec_params(query, params)
+    peeps = []
+    for entry in entries do
+      time = Time.parse(entry['time'])
+      content = entry['content']
+      account_id = entry['account_id'].to_i
+      peep = Peep.new(time, content, account_id)
+      peep.id = entry['id'].to_i
+      peeps << peep
+    end
+    return peeps.reverse
   end
 end
