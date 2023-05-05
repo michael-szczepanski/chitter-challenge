@@ -18,9 +18,17 @@
   <body>
     <h1>Welcome to Chitter</h1>
 
+    <span class="simpleborder"><a href="/sign_up">Sign up</a></span><br>
+    <% if settings.user_id == 1 %>
+      <span class="simpleborder"><a href="/log_in">Log in</a></span>
+    <% else %>
+      <span class="simpleborder"><a href="/log_out">Log out</a></span>
+    <% end %>
+
     <h2>Post to Chitter:</h2>
     <form method="POST" action="/new_peep">
-    <input type="text" name="content" placeholder="Tell us what is on your mind">
+    <input type="text" name="content" placeholder="What is on your mind?"
+      oninvalid="alert('You must write something to post it')" required>
     <input type="submit" name="Post to Chitter">
 
     <h2>See what people are talking about:</h2>

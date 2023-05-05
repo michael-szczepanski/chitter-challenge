@@ -34,6 +34,16 @@ RSpec.describe Chitter do
     end
   end
 
-  context 'GET /sign-up' do
-    
+  context 'GET /sign_up' do
+    it 'correctly displays the sign up page' do
+      response = get('/sign_up')
+      expect(response.status).to eq 200
+      expect(response.body).to include('<h1>Sign up for a Chitter account</h1>')
+      expect(response.body).to include('<form method="POST" action="/new_user">')
+      expect(response.body).to include('name="username"')
+      expect(response.body).to include('name="password"')
+      expect(response.body).to include('name="email"')
+      expect(response.body).to include('name="name"')
+    end
+  end
 end

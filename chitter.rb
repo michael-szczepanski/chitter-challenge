@@ -8,10 +8,13 @@ require_relative './lib/account_repository'
 DatabaseConnection.connect
 
 class Chitter < Sinatra::Base
+
   configure :development do
     register Sinatra::Reloader
     # also_reload lib/peep_repository
     # also_reload lib/account_repository
+    set :test, false # settings.test to access variable
+    set :user_id, 1
   end
 
   get '/' do
@@ -23,16 +26,17 @@ class Chitter < Sinatra::Base
     return erb(:main_page)
   end
 
-  post '/new_peep' do
-    @time = Time.now
-    @content = params[:content]
-    @account_id = 1
-    peep = Peep.new(@time, @content, @account_id)
+  get '/sign_up' do
+    erb(:sign_up_page)
+  end
 
+  post '/new_peep' do
+    time = Time.now
+    content = params[:content]
+    peep = Peep.new(time, content, settings.user_id)
     peep_repo = PeepRepository.new
     peep_repo.add(peep)
 
     redirect '/'
   end
-
 end

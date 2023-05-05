@@ -1,4 +1,5 @@
 class AccountRepository
+  
   def read_id_user_pairs
     # Takes no arguments
     # Returns a hash of id=>name pairs for accounts

@@ -5,7 +5,8 @@ A Twitter clone build as part of the Makers Academy development course
 ## How to use
 
 ```shell
-ruby chitter.rb
+rackup
+http://127.0.0.1:('PORT')/
 ```
 
 ## Design changes

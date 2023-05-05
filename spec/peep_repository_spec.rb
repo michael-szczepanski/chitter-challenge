@@ -24,7 +24,7 @@ RSpec.describe PeepRepository do
       expect(peeps.last.id).to eq 1
       expect(peeps.last.time).to eq Time.parse('2023-05-04 12:45:12')
       expect(peeps.last.content).to eq 'Mikes peep'
-      expect(peeps.last.account_id).to eq 1
+      expect(peeps.last.account_id).to eq 2
     end
   end
 end
