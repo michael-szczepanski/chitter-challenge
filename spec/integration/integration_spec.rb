@@ -87,6 +87,10 @@ RSpec.describe Chitter do
       expect(response.body).to include 'my first post'
       expect(response.body).to include 'Kevin (kevin)'
     end
+    it 'fails to log in a user if username/password not matched' do
+      response = post('/log_in', { username: 'mike', password: 'incorrectpassword' })
+      expect(response.status).to eq 400
+    end
   end
 
   context 'POST /log_out' do

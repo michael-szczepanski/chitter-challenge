@@ -56,10 +56,10 @@ class Chitter < Sinatra::Base
       @account = Account.new(name, email, username, password)
       account_repo.create(@account)
       session[:user] = account_repo.log_in(username, password)
-      erb(:new_user_created)
+      return erb(:new_user_created)
     else
       status 400
-      erb(:sign_up_failed)      
+      return erb(:sign_up_failed)      
     end
   end
 
@@ -68,7 +68,12 @@ class Chitter < Sinatra::Base
     username = params[:username].gsub(/[<>]/, "")
     password = params[:password].gsub(/[<>]/, "")
     session[:user] = account_repo.log_in(username, password)
-    redirect '/'
+    if session[:user].nil?
+      status 400
+      return erb(:log_in_failed)
+    else
+      redirect '/'
+    end
   end
 
   post '/log_out' do
