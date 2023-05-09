@@ -7,7 +7,8 @@ services:
   - postgresql
 
 before_script:
-  - psql -U postgres -c 'CREATE DATABASE chitter_test;'
+  - psql -I postgres -c 'CREATE DATABASE chitter_challenge_test'
+  - psql -I postgres -c 'CREATE DATABASE chitter_challenge'
 
 script:
   - bundle exec rspec
