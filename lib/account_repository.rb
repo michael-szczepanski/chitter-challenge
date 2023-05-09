@@ -51,4 +51,24 @@ class AccountRepository
     user.id = entry.first["id"].to_i
     return user
   end
+
+  def username_is_unique?(username)
+    # Takes a string as an argument
+    # Returns true if no entries with that username have been found
+    # Returns false otherwise
+    query = "SELECT id FROM accounts WHERE username=$1"
+    params = [username]
+    entries = DatabaseConnection.exec_params(query, params).to_a
+    return entries.empty?
+  end
+
+  def email_is_unique?(email)
+    # Takes a string as an argument
+    # Returns true if no entries with that email have been found
+    # Returns false otherwise
+    query = "SELECT id FROM accounts WHERE email=$1"
+    params = [email]
+    entries = DatabaseConnection.exec_params(query, params).to_a
+    return entries.empty?
+  end
 end

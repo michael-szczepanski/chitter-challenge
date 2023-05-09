@@ -54,6 +54,14 @@ RSpec.describe Chitter do
       expect(response.status).to eq 200
       expect(response.body).to include('Welcome to the Chitter gang, Kevin!')
     end
+    it 'rejects a user with duplicate username' do
+      response = post('/new_user', { name: 'Kevin', email: 'kevin@kevin.com', username: 'mike', password: 'kevin' })
+      expect(response.status).to eq 400
+    end
+    it 'rejects a user with duplicate email' do
+      response = post('/new_user', { name: 'Kevin', email: 'mike@mike.mike', username: 'mike', password: 'kevin' })
+      expect(response.status).to eq 400
+    end
   end
 
   context 'GET /log_in' do
@@ -92,6 +100,5 @@ RSpec.describe Chitter do
       response = get('/')
       expect(response.body).not_to include 'Logged in as: Kevin'
     end
-  end 
-
+  end
 end

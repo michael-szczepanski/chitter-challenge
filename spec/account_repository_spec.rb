@@ -34,5 +34,15 @@ RSpec.describe AccountRepository do
       expect(user.id).to eq 1
       expect(user.username).to eq 'anon'
     end
+
+    it 'checks if username is unique' do
+      expect(repo.username_is_unique?('mike')).to eq false
+      expect(repo.username_is_unique?('kevin')).to eq true
+    end
+
+    it 'checks if email is unique' do
+      expect(repo.email_is_unique?('mike@mike.mike')).to eq false
+      expect(repo.email_is_unique?('hi')).to eq true
+    end
   end
 end

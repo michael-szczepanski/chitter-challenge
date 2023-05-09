@@ -39,7 +39,7 @@ class Chitter < Sinatra::Base
   post '/new_peep' do
     peep_repo = PeepRepository.new
     time = Time.now
-    content = params[:content]
+    content = params[:content].gsub(/[<>]/, "")
     peep = Peep.new(time, content, session[:user].nil? ? 1 : session[:user].id)
     peep_repo.add(peep)
 
@@ -48,15 +48,26 @@ class Chitter < Sinatra::Base
 
   post '/new_user' do
     account_repo = AccountRepository.new
-    @account = Account.new(params[:name], params[:email], params[:username], params[:password])
-    account_repo.create(@account)
-    session[:user] = account_repo.log_in(params[:username], params[:password])
-    erb(:new_user_created)
+    username = params[:username].gsub(/[<>]/, "")
+    email = params[:email].gsub(/[<>]/, "")
+    if account_repo.username_is_unique?(username) && account_repo.email_is_unique?(email)
+      name = params[:name].gsub(/[<>]/, "")
+      password = params[:password].gsub(/[<>]/, "")
+      @account = Account.new(name, email, username, password)
+      account_repo.create(@account)
+      session[:user] = account_repo.log_in(username, password)
+      erb(:new_user_created)
+    else
+      status 400
+      erb(:sign_up_failed)      
+    end
   end
 
   post '/log_in' do
     account_repo = AccountRepository.new
-    session[:user] = account_repo.log_in(params[:username], params[:password])
+    username = params[:username].gsub(/[<>]/, "")
+    password = params[:password].gsub(/[<>]/, "")
+    session[:user] = account_repo.log_in(username, password)
     redirect '/'
   end
 
@@ -64,4 +75,5 @@ class Chitter < Sinatra::Base
     session[:user] = AccountRepository.new.find_by_id(1)
     redirect '/'
   end
+
 end

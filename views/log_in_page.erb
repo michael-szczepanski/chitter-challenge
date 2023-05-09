@@ -7,7 +7,11 @@
     <form method="POST" action="/log_in">
     <input type="text" name="username" placeholder="username" oninvalid="alert('username cannot be empty')">
     <input type="password" name="password" placeholder="password" oninvalid="alert('password cannot be empty')">
-    <input type="Submit" name="Log in">
+    <input type="Submit" name="Log in" onClick="return checkInfo()">
+    </form>
+    <form action="/" method="GET">
+      <input type="submit" value="Back to homepage." />
+    </form>
   </body>
 
 </html>
