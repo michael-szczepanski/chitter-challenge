@@ -6,7 +6,7 @@ A Twitter clone build as part of the Makers Academy development course
 
 ```shell
 rackup
-http://127.0.0.1:('PORT')/
+http://localhost:('PORT')/
 ```
 
 ## Design changes

@@ -2,14 +2,14 @@ class AccountRepository
   
   def read_id_user_pairs
     # Takes no arguments
-    # Returns a hash of id=>name pairs for accounts
-    query = "SELECT id, name FROM accounts"
+    # Returns a hash of id=>'name (username)' pairs for accounts
+    query = "SELECT id, name, username FROM accounts"
     params = []
     entries = DatabaseConnection.exec_params(query, params)
     users = {}
     for user in entries
       key = user['id'].to_i
-      value = user['name']
+      value = "#{user['name']} (#{user['username']})"
       users[key] = value
     end
     return users

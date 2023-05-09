@@ -19,7 +19,7 @@
     <h1>Welcome to Chitter</h1>
 
     <span class="simpleborder"><a href="/sign_up">Sign up</a></span><br>
-    <% if settings.user_id == 1 %>
+    <% if settings.user == nil %>
       <span class="simpleborder"><a href="/log_in">Log in</a></span>
     <% else %>
       <span class="simpleborder"><a href="/log_out">Log out</a></span>

@@ -65,4 +65,10 @@ RSpec.describe Chitter do
       expect(response.body).to include('name="password"')
     end
   end
+
+  context 'POST /log_in' do
+    it 'retrieves a user object from the database' do
+    end
+  end
+
 end
