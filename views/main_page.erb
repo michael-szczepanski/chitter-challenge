@@ -18,14 +18,14 @@
   <body>
     <h1>Welcome to Chitter</h1><br>
 
-    <% if session[:user].username != 'anon' %>
-      <h2>Logged in as: <%= session[:user].name %></h2><br>
+    <% if @user.username != 'anon' %>
+      <h2>Logged in as: <%= @user.name %></h2><br>
     <% end %>
 
     <form action="/sign_up" method="GET">
       <input type="submit" name="sign_up" value="Sign up" />
     </form>
-    <% if session[:user].name == 'Anonymous' %>
+    <% if @user.name == 'Anonymous' %>
       <form action="/log_in" method="GET">
         <input type="submit" name="log_in" value="Log in" />
       </form>
