@@ -54,4 +54,15 @@ RSpec.describe Chitter do
       expect(response.body).to include('Welcome to the Chitter gang, Kevin!')
     end
   end
+
+  context 'GET /log_in' do
+    it 'displays a html document of the log in page' do
+      response = get('/log_in')
+      expect(response.status).to eq 200
+      expect(response.body).to include('<h1>Log in to your Chitter account</h1>')
+      expect(response.body).to include('<form method="POST" action="/log_in">')
+      expect(response.body).to include('name="username"')
+      expect(response.body).to include('name="password"')
+    end
+  end
 end

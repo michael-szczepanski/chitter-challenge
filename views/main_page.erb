@@ -32,6 +32,7 @@
     <input type="submit" name="Post to Chitter">
 
     <h2>See what people are talking about:</h2>
+      <input type="button" value="Refresh peeps" onClick="window.location.reload()"><br>
       <% for peep in @peeps %>
         <span><%= peep.time %></span><br>
         <span class="simpleborder"><%= @accounts[peep.account_id] %></span><br>
