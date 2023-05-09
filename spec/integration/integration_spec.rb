@@ -80,4 +80,17 @@ RSpec.describe Chitter do
     end
   end
 
+  context 'POST /log_out' do
+    it 'successfully logs out a user' do
+      post('/new_user', { name: 'Kevin', email: 'kevin@kevin.com', username: 'kevin', password: 'kevin1' })
+      post('/log_in', { username: 'kevin', password: 'kevin1'})
+      response = get('/')
+      expect(response.body).to include 'Logged in as: Kevin'
+      response = post('/log_out')
+      expect(response.status).to eq 302
+      response = get('/')
+      expect(response.body).not_to include 'Logged in as: Kevin'
+    end
+  end 
+
 end

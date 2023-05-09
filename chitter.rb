@@ -58,4 +58,9 @@ class Chitter < Sinatra::Base
     settings.user = account_repo.log_in(params[:username], params[:password])
     redirect '/'
   end
+
+  post '/log_out' do
+    settings.user = 0
+    redirect '/'
+  end
 end

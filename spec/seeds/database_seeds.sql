@@ -21,7 +21,7 @@ TRUNCATE TABLE accounts, peeps;
 INSERT INTO accounts
 (name, username, email, password) VALUES
 ('Anonymous', 'anon', NULL, NULL),
-('Mike', 'mike', 'mike@mike.com', 'mike1'),
+('Mike', 'mike', 'mike@mike.mike', 'mike1'),
 ('Ruby', 'ruby', 'ruby@ruby.ruby', 'ruby1');
 
 INSERT INTO peeps
