@@ -1,7 +1,7 @@
 class Account
   attr_accessor :id, :name, :email, :username, :password
 
-  def initialize(name, username, email='', password='')
+  def initialize(name, username, email = '', password = '')
     @name = name
     @email = email
     @username = username

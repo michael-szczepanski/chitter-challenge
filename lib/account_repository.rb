@@ -33,12 +33,22 @@ class AccountRepository
     query = "SELECT id, name, username FROM accounts WHERE username = $1 AND password = $2"
     params = [username, password]
     entry = DatabaseConnection.exec_params(query, params).to_a
-    return nil unless entry.length != 0
+    return nil if entry.empty?
     user = Account.new(entry.first["name"], entry.first["username"])
     user.id = entry.first["id"].to_i
-    p user
     return user
   end
 
-  
+  def find_by_id(id)
+    # Takes an integer as an argument
+    # Returns an account object if id is found in database
+    # Returns nil otherwise
+    query = "SELECT id, name, username FROM accounts WHERE id = $1"
+    params = [id]
+    entry = DatabaseConnection.exec_params(query, params).to_a
+    return nil if entry.empty?
+    user = Account.new(entry.first["name"], entry.first["username"])
+    user.id = entry.first["id"].to_i
+    return user
+  end
 end

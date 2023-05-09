@@ -10,17 +10,26 @@ DatabaseConnection.connect
 
 class Chitter < Sinatra::Base
 
+  # @user = Account.new('Anonymous', 'anon')
+
+  # def initialize
+  #   super()
+  #   @user = 0
+  # end
+
   configure :development do
     register Sinatra::Reloader
+    enable :sessions
     # also_reload lib/peep_repository
     # also_reload lib/account_repository
-    set :test, false # settings.test to access variable
-    set :user, 0
   end
 
   get '/' do
     peep_repo = PeepRepository.new
     account_repo = AccountRepository.new
+    if session[:user].nil?
+      session[:user] = AccountRepository.new.find_by_id(1)
+    end
     @peeps = peep_repo.list_peeps
     @accounts = account_repo.read_id_user_pairs
     
@@ -39,7 +48,7 @@ class Chitter < Sinatra::Base
     peep_repo = PeepRepository.new
     time = Time.now
     content = params[:content]
-    peep = Peep.new(time, content, settings.user == 0 ? 1 : settings.user.id) # user set to 1 (Anonymous) if user not logged in
+    peep = Peep.new(time, content, session[:user].id == nil ? 1 : session[:user].id)
     peep_repo.add(peep)
 
     redirect '/'
@@ -55,12 +64,12 @@ class Chitter < Sinatra::Base
 
   post '/log_in' do
     account_repo = AccountRepository.new
-    settings.user = account_repo.log_in(params[:username], params[:password])
+    session[:user] = account_repo.log_in(params[:username], params[:password])
     redirect '/'
   end
 
   post '/log_out' do
-    settings.user = 0
+    session[:user] = AccountRepository.new.find_by_id(1)
     redirect '/'
   end
 end

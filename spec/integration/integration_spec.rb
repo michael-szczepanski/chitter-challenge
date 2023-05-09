@@ -25,7 +25,8 @@ RSpec.describe Chitter do
 
   context 'POST /new_peep' do
     it 'adds a post to the database' do
-      response = post('/new_peep', { content: 'New post' })
+      get('/')
+      response = post('/new_peep', content: 'New post')
       expect(response.status).to eq 302
       response = get('/')
       expect(response.status).to eq 200
@@ -69,7 +70,7 @@ RSpec.describe Chitter do
   context 'POST /log_in' do
     it 'retrieves a user object from the database' do
       post('/new_user', { name: 'Kevin', email: 'kevin@kevin.com', username: 'kevin', password: 'kevin1' })
-      response = post('/log_in', { username: 'kevin', password: 'kevin1'})
+      response = post('/log_in', { username: 'kevin', password: 'kevin1' })
       expect(response.status).to eq 302
 
       post('/new_peep', { content: 'my first post' })
@@ -83,7 +84,7 @@ RSpec.describe Chitter do
   context 'POST /log_out' do
     it 'successfully logs out a user' do
       post('/new_user', { name: 'Kevin', email: 'kevin@kevin.com', username: 'kevin', password: 'kevin1' })
-      post('/log_in', { username: 'kevin', password: 'kevin1'})
+      post('/log_in', { username: 'kevin', password: 'kevin1' })
       response = get('/')
       expect(response.body).to include 'Logged in as: Kevin'
       response = post('/log_out')

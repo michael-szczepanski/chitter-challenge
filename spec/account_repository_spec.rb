@@ -27,5 +27,12 @@ RSpec.describe AccountRepository do
       expect(user.username).to eq 'mike'
       expect(user.id).to eq 2
     end
+
+    it 'returns a single user by id provided' do
+      user = repo.find_by_id(1)
+      expect(user.name).to eq 'Anonymous'
+      expect(user.id).to eq 1
+      expect(user.username).to eq 'anon'
+    end
   end
 end
