@@ -47,7 +47,7 @@ class Chitter < Sinatra::Base
     peep_repo = PeepRepository.new
     time = Time.now
     content = params[:content]
-    peep = Peep.new(time, content, session[:user].id == nil ? 1 : session[:user].id)
+    peep = Peep.new(time, content, session[:user] == nil ? 1 : session[:user].id)
     peep_repo.add(peep)
 
     redirect '/'
