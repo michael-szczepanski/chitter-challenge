@@ -28,7 +28,7 @@ class Chitter < Sinatra::Base
   get '/' do
     peep_repo = PeepRepository.new
     account_repo = AccountRepository.new
-    session[:user] = AccountRepository.new.find_by_id(1) if session[:user].nil?
+    session[:user] = AccountRepository.new.find_by_id(2) if session[:user].nil?
     @peeps = peep_repo.list_peeps
     @accounts = account_repo.read_id_user_pairs
     @user = session[:user]
