@@ -68,7 +68,15 @@ RSpec.describe Chitter do
 
   context 'POST /log_in' do
     it 'retrieves a user object from the database' do
-      
+      post('/new_user', { name: 'Kevin', email: 'kevin@kevin.com', username: 'kevin', password: 'kevin1' })
+      response = post('/log_in', { username: 'kevin', password: 'kevin1'})
+      expect(response.status).to eq 302
+
+      post('/new_peep', { content: 'my first post' })
+      response = get('/')
+      expect(response.body).to include 'Logged in as: Kevin'
+      expect(response.body).to include 'my first post'
+      expect(response.body).to include 'Kevin (kevin)'
     end
   end
 

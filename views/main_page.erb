@@ -16,10 +16,14 @@
   </style>
 
   <body>
-    <h1>Welcome to Chitter</h1>
+    <h1>Welcome to Chitter</h1><br>
+
+    <% if settings.user != 0 %>
+    <h2>Logged in as: <%= settings.user.name %></h2><br>
+    <% end %>
 
     <span class="simpleborder"><a href="/sign_up">Sign up</a></span><br>
-    <% if settings.user == nil %>
+    <% if settings.user == 0 %>
       <span class="simpleborder"><a href="/log_in">Log in</a></span>
     <% else %>
       <span class="simpleborder"><a href="/log_out">Log out</a></span>

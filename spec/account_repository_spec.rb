@@ -14,11 +14,18 @@ RSpec.describe AccountRepository do
   end
 
   context 'READ' do
+    repo = AccountRepository.new
     it 'returns a hash of id=>name pairs for accounts' do
-      repo = AccountRepository.new
       users = repo.read_id_user_pairs
       expect(users[1]).to eq 'Anonymous (anon)'
       expect(users[2]).to eq 'Mike (mike)'
+    end
+
+    it 'returns a user provided a correct username/password' do
+      user = repo.log_in('mike', 'mike1')
+      expect(user.name).to eq 'Mike'
+      expect(user.username).to eq 'mike'
+      expect(user.id).to eq 2
     end
   end
 end

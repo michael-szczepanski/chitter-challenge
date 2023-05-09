@@ -1,3 +1,5 @@
+
+
 class AccountRepository
   
   def read_id_user_pairs
@@ -20,8 +22,23 @@ class AccountRepository
     # Adds the relevant object into the database
     # Returns nothing
     query = "INSERT INTO accounts (name, email, username, password) VALUES ($1, $2, $3, $4)"
-    params = [account.name, account.email, account.username, account.password]
+    params = [account.name, account.username, account.email, account.password]
     DatabaseConnection.exec_params(query, params)
   end
+
+  def log_in(username, password)
+    # Takes username/password strings as arguments
+    # Returns a user object with id/name/username parameters if matched. 
+    # Returns nil otherwise
+    query = "SELECT id, name, username FROM accounts WHERE username = $1 AND password = $2"
+    params = [username, password]
+    entry = DatabaseConnection.exec_params(query, params).to_a
+    return nil unless entry.length != 0
+    user = Account.new(entry.first["name"], entry.first["username"])
+    user.id = entry.first["id"].to_i
+    p user
+    return user
+  end
+
   
 end

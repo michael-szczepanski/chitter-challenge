@@ -15,7 +15,7 @@ class Chitter < Sinatra::Base
     # also_reload lib/peep_repository
     # also_reload lib/account_repository
     set :test, false # settings.test to access variable
-    set :user, nil
+    set :user, 0
   end
 
   get '/' do
@@ -39,7 +39,7 @@ class Chitter < Sinatra::Base
     peep_repo = PeepRepository.new
     time = Time.now
     content = params[:content]
-    peep = Peep.new(time, content, settings.user == nil ? 1 : settings.user) # user set to 1 (Anonymous) if user not logged in
+    peep = Peep.new(time, content, settings.user == 0 ? 1 : settings.user.id) # user set to 1 (Anonymous) if user not logged in
     peep_repo.add(peep)
 
     redirect '/'
@@ -51,5 +51,11 @@ class Chitter < Sinatra::Base
     account_repo.create(@account)
 
     erb(:new_user_created)
+  end
+
+  post '/log_in' do
+    account_repo = AccountRepository.new
+    settings.user = account_repo.log_in(params[:username], params[:password])
+    redirect '/'
   end
 end
