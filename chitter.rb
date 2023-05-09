@@ -20,6 +20,7 @@ class Chitter < Sinatra::Base
   configure :development do
     register Sinatra::Reloader
     enable :sessions
+    set :sessions, :domain => '.com'
     # also_reload lib/peep_repository
     # also_reload lib/account_repository
   end
@@ -27,7 +28,7 @@ class Chitter < Sinatra::Base
   get '/' do
     peep_repo = PeepRepository.new
     account_repo = AccountRepository.new
-    session[:user] = AccountRepository.new.find_by_id(1) if session[:user].nil?
+    session[:user] = AccountRepository.new.find_by_id(2) if session[:user].nil?
     @peeps = peep_repo.list_peeps
     @accounts = account_repo.read_id_user_pairs
     @user = session[:user]
@@ -47,7 +48,7 @@ class Chitter < Sinatra::Base
     peep_repo = PeepRepository.new
     time = Time.now
     content = params[:content]
-    peep = Peep.new(time, content, session[:user] == nil ? 1 : session[:user].id)
+    peep = Peep.new(time, content, session[:user].id)
     peep_repo.add(peep)
 
     redirect '/'
@@ -57,7 +58,7 @@ class Chitter < Sinatra::Base
     account_repo = AccountRepository.new
     @account = Account.new(params[:name], params[:email], params[:username], params[:password])
     account_repo.create(@account)
-
+    session[:user] = account_repo.log_in(params[:username], params[:password])
     erb(:new_user_created)
   end
 
