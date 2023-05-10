@@ -88,7 +88,6 @@ DEPENDENCIES
   simplecov-console
   sinatra (~> 2.2)
   sinatra-contrib (~> 2.2)
-  sinatra-session (~> 1.0)
   webrick (~> 1.8)
 
 RUBY VERSION
