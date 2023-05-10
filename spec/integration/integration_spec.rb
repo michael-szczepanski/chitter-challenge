@@ -77,7 +77,7 @@ RSpec.describe Chitter do
 
   context 'POST /log_in' do
     it 'retrieves a user object from the database' do
-      post('/new_user', { name: 'Kevin', email: 'kevin@kevin.com', username: 'kevin', password: 'kevin1' })
+      post('/new_user', { name: 'Kevin', username: 'kevin', email: 'kevin@kevin.com', password: 'kevin1' })
       response = post('/log_in', { username: 'kevin', password: 'kevin1' })
       expect(response.status).to eq 302
 
@@ -88,7 +88,8 @@ RSpec.describe Chitter do
       expect(response.body).to include 'Kevin (kevin)'
     end
     it 'fails to log in a user if username/password not matched' do
-      response = post('/log_in', { username: 'mike', password: 'incorrectpassword' })
+      post('/new_user', { name: 'Kevin', email: 'kevin@kevin.com', username: 'kevin', password: 'kevin1' })
+      response = post('/log_in', { username: 'kevin', password: 'incorrectpassword' })
       expect(response.status).to eq 400
     end
   end

@@ -23,3 +23,5 @@ gem "sinatra-contrib", "~> 2.2"
 gem "webrick", "~> 1.8"
 
 gem "rack-session", "~> 1.0"
+
+gem "bcrypt", "~> 3.1"

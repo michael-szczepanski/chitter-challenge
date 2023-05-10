@@ -1,4 +1,4 @@
-
+require 'bcrypt'
 
 class AccountRepository
   
@@ -21,8 +21,10 @@ class AccountRepository
     # Takes an Account object as an argument
     # Adds the relevant object into the database
     # Returns nothing
-    query = "INSERT INTO accounts (name, email, username, password) VALUES ($1, $2, $3, $4)"
-    params = [account.name, account.username, account.email, account.password]
+    encrypted_password = BCrypt::Password.create(account.password)
+
+    query = "INSERT INTO accounts (name, username, email, password) VALUES ($1, $2, $3, $4)"
+    params = [account.name, account.username, account.email, encrypted_password]
     DatabaseConnection.exec_params(query, params)
   end
 
@@ -30,10 +32,12 @@ class AccountRepository
     # Takes username/password strings as arguments
     # Returns a user object with id/name/username parameters if matched. 
     # Returns nil otherwise
-    query = "SELECT id, name, username FROM accounts WHERE username = $1 AND password = $2"
-    params = [username, password]
+    query = "SELECT id, name, username, password FROM accounts WHERE username = $1"
+    params = [username]
     entry = DatabaseConnection.exec_params(query, params).to_a
     return nil if entry.empty?
+    stored_password = BCrypt::Password.new(entry.first["password"])
+    return nil unless stored_password == password
     user = Account.new(entry.first["name"], entry.first["username"])
     user.id = entry.first["id"].to_i
     return user
