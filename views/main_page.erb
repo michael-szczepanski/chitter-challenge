@@ -16,10 +16,10 @@
   </style>
 
   <body>
-    <h1>Welcome to Chitter</h1><br>
+    <h1>Welcome to Chitter</h1>
 
     <% if @user.username != 'anon' %>
-      <h2>Logged in as: <%= @user.name %></h2><br>
+      <h2>Logged in as: <%= @user.name %></h2>
     <% end %>
 
     <form action="/sign_up" method="GET">
@@ -36,6 +36,7 @@
     <% end %>
 
     <h2>Post to Chitter:</h2>
+    <h3>Use @username to tag another user in your post</h3>
     <form method="POST" action="/new_peep">
     <input type="text" name="content" placeholder="What is on your mind?"
       oninvalid="alert('You must write something to post it')" required>

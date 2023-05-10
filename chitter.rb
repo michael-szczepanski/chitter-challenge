@@ -53,8 +53,8 @@ class Chitter < Sinatra::Base
     account_repo = AccountRepository.new
     username = params[:username]
     email = params[:email]
-    username_valid = account_repo.username_is_unique?(username)
-    email_valid = account_repo.email_is_unique?(email)
+    username_valid = account_repo.username_is_valid?(username)
+    email_valid = account_repo.email_is_valid?(email)
     
     if username_valid && email_valid
       name = params[:name]
@@ -65,7 +65,7 @@ class Chitter < Sinatra::Base
       return erb(:new_user_created)
     else
       flash[:username] = "Username is already in use" unless username_valid
-      flash[:email] = "Email is already in use" unless email_valid
+      flash[:email] = "This email is already in use" unless email_valid
       redirect '/sign_up'
     end
 
@@ -90,3 +90,5 @@ class Chitter < Sinatra::Base
   end
 
 end
+
+

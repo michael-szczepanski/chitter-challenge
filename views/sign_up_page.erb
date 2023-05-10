@@ -1,6 +1,10 @@
 <html>
   <head></head>
-  <style></style>
+  <style>
+    span {
+      line-height: 1.5;
+    }
+  </style>
   <body>
     <h1>Sign up for a Chitter account</h1>
     <% flash.keys.each do |type| %>
@@ -10,10 +14,14 @@
       </div>
     <% end %>
     <form method="POST" action="/new_user">
-    <input required type="text" name="name" placeholder="Your name" oninvalid="alert('Name cannot be empty')">
-    <input required type="text" name="email" placeholder="Your email" oninvalid="alert('Email cannot be empty')">
-    <input required type="text" name="username" placeholder="Your username" oninvalid="alert('Username cannot be empty')">
-    <input required type="password" name="password" placeholder="Your password" oninvalid="alert('Password cannot be empty')">
+    <span>User</span>
+    <input required type="text" name="name" placeholder="Your name" oninvalid="alert('Name cannot be empty')"><br>
+    <span>Email</span>
+    <input required type="text" name="email" placeholder="Your email" pattern="/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]+)$/" oninvalid="alert('Email format invalid')"><br>
+    <span>Username</span>
+    <input required type="text" name="username" placeholder="Your username" pattern="/^[A-Za-z0-9]+$/" oninvalid="alert('Username has to contain alphanumeric characters only')"><br>
+    <span>Password</span>
+    <input required type="password" name="password" placeholder="Your password" minlength=6 oninvalid="alert('Password has to be at least 6 characters long')"><br>
     <input type="submit" name="Register">
     </form>
     <form action="/" method="GET">

@@ -39,16 +39,16 @@ RSpec.describe AccountRepository do
       expect(user.username).to eq 'anon'
     end
 
-    it 'checks if username is unique' do
+    it 'checks if username is valid' do
       repo = AccountRepository.new
-      expect(repo.username_is_unique?('mike')).to eq false
-      expect(repo.username_is_unique?('kevin')).to eq true
+      expect(repo.username_is_valid?('mike')).to eq false
+      expect(repo.username_is_valid?('kevin')).to eq true
     end
 
     it 'checks if email is unique' do
       repo = AccountRepository.new
-      expect(repo.email_is_unique?('mike@mike.mike')).to eq false
-      expect(repo.email_is_unique?('hi')).to eq true
+      expect(repo.email_is_valid?('mike@mike.mike')).to eq false
+      expect(repo.email_is_valid?('hh4@gmail.com')).to eq true
     end
   end
 end

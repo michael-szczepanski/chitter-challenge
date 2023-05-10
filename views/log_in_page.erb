@@ -1,7 +1,11 @@
 <html>
 
   <head></head>
-  <style></style>
+  <style>
+    span {
+      line-height: 1.5;
+    }
+  </style>
   <body>
     <h1>Log in to your Chitter account</h1>
     <% flash.keys.each do |type| %>
@@ -11,8 +15,10 @@
       </div>
     <% end %>
     <form method="POST" action="/log_in">
-    <input type="text" name="username" placeholder="username" oninvalid="alert('username cannot be empty')">
-    <input type="password" name="password" placeholder="password" oninvalid="alert('password cannot be empty')">
+    <span>Login</span>
+    <input type="text" name="username" placeholder="username" oninvalid="alert('username cannot be empty')"><br>
+    <span>Password</span>
+    <input type="password" name="password" placeholder="password" oninvalid="alert('password cannot be empty')"><br>
     <input type="Submit" name="Log in" onClick="return checkInfo()">
     </form>
     <form action="/" method="GET">
