@@ -10,9 +10,10 @@ DatabaseConnection.connect
 
 class Chitter < Sinatra::Base
 
+  enable :sessions
+
   configure :development do
     register Sinatra::Reloader
-    enable :sessions
     # also_reload lib/peep_repository
     # also_reload lib/account_repository
   end
