@@ -25,3 +25,5 @@ gem "webrick", "~> 1.8"
 gem "rack-session", "~> 1.0"
 
 gem "bcrypt", "~> 3.1"
+
+gem "sinatra-flash", "~> 0.3.0"

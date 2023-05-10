@@ -1,5 +1,6 @@
 require 'sinatra'
 require 'sinatra/reloader'
+require 'sinatra/flash'
 require_relative './lib/database_connection'
 require_relative './lib/peep'
 require_relative './lib/peep_repository'
@@ -14,6 +15,7 @@ class Chitter < Sinatra::Base
 
   configure :development do
     register Sinatra::Reloader
+    register Sinatra::Flash
     # also_reload lib/peep_repository
     # also_reload lib/account_repository
   end
@@ -51,8 +53,10 @@ class Chitter < Sinatra::Base
     account_repo = AccountRepository.new
     username = params[:username]
     email = params[:email]
-
-    if account_repo.username_is_unique?(username) && account_repo.email_is_unique?(email)
+    username_valid = account_repo.username_is_unique?(username)
+    email_valid = account_repo.email_is_unique?(email)
+    
+    if username_valid && email_valid
       name = params[:name]
       password = params[:password]
       @account = Account.new(name, username, email, password)
@@ -60,8 +64,9 @@ class Chitter < Sinatra::Base
       session[:user] = account_repo.log_in(username, password)
       return erb(:new_user_created)
     else
-      status 400
-      return erb(:sign_up_failed)
+      flash[:username] = "Username is already in use" unless username_valid
+      flash[:email] = "Email is already in use" unless email_valid
+      redirect '/sign_up'
     end
 
   end
@@ -72,8 +77,8 @@ class Chitter < Sinatra::Base
     password = params[:password]
     session[:user] = account_repo.log_in(username, password)
     if session[:user].nil?
-      status 400
-      return erb(:log_in_failed)
+      flash[:failed] = "Incorrect username/password"
+      redirect '/log_in'
     else
       redirect '/'
     end

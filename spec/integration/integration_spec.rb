@@ -56,11 +56,13 @@ RSpec.describe Chitter do
     end
     it 'rejects a user with duplicate username' do
       response = post('/new_user', { name: 'Kevin', email: 'kevin@kevin.com', username: 'mike', password: 'kevin' })
-      expect(response.status).to eq 400
+      expect(response.status).to eq 302
+      expect(response.original_headers["Location"]).to include '/sign_up'
     end
     it 'rejects a user with duplicate email' do
       response = post('/new_user', { name: 'Kevin', email: 'mike@mike.mike', username: 'mike', password: 'kevin' })
-      expect(response.status).to eq 400
+      expect(response.status).to eq 302
+      expect(response.original_headers["Location"]).to include '/sign_up'
     end
   end
 
@@ -90,7 +92,9 @@ RSpec.describe Chitter do
     it 'fails to log in a user if username/password not matched' do
       post('/new_user', { name: 'Kevin', email: 'kevin@kevin.com', username: 'kevin', password: 'kevin1' })
       response = post('/log_in', { username: 'kevin', password: 'incorrectpassword' })
-      expect(response.status).to eq 400
+      expect(response.status).to eq 302
+      get('/')
+      expect(response.body).not_to include 'Logged in as: Kevin'
     end
   end
 

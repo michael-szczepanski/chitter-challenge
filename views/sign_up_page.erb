@@ -3,6 +3,12 @@
   <style></style>
   <body>
     <h1>Sign up for a Chitter account</h1>
+    <% flash.keys.each do |type| %>
+      <div data-alert class="flash <%= type %> alert-box radius">
+        <%= flash[type] %>
+        <a href="#" class="close">&times;</a>
+      </div>
+    <% end %>
     <form method="POST" action="/new_user">
     <input required type="text" name="name" placeholder="Your name" oninvalid="alert('Name cannot be empty')">
     <input required type="text" name="email" placeholder="Your email" oninvalid="alert('Email cannot be empty')">
