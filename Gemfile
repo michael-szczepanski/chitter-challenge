@@ -21,3 +21,5 @@ gem "sinatra", "~> 2.2"
 gem "sinatra-contrib", "~> 2.2"
 
 gem "webrick", "~> 1.8"
+
+gem "sinatra-session", "~> 1.0"
