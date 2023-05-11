@@ -1,7 +1,7 @@
 require_relative './peep_repository'
 require_relative './account_repository'
 
-module ListHelper
+class ListHelper
 
   def gen_peep_list(peeps, tab_size)
     # Takes an array of peep objects

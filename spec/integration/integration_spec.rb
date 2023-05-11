@@ -19,7 +19,7 @@ RSpec.describe Chitter do
       expect(response.body).to include('<h2>See what people are talking about:</h2>')
       expect(response.body).to include('Mikes peep')
       expect(response.body).to include('Rubys peep')
-      expect(response.body).to include('2023-05-05')
+      expect(response.body).to include('05/05/2023')
     end
   end
 
