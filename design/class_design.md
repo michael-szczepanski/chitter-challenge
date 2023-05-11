@@ -11,6 +11,8 @@ Application:
   def: post_peep
   def: send_email
 
+  
+
 #### Model classes:
 
 Account:
@@ -24,10 +26,27 @@ Peep:
   id: Int
   time: Date
   content: String
-  tag: int (referencing Account id)
+  account_id: int (referencing Account id)
+  peeps: Array (array of sub peeps)
+
 
 #### Repository classes:
 
 AccountRepository
+  read_id_user_pairs
+    # returns id=>username pairs
+  create(account)
+    # adds a new account object to database
+  log_in(username, password)
+    # checks if username/password combo exists in database
+  find_by_id(id)
+  username is valid?(username)
+    # checks if username is avaialble for signup
+  email_is_valid?(email)
+    # checks if email is available for signup
 
 PeepRepository
+  add(peep)
+    # adds a new peep to the database
+  list_peeps
+    # lists all peeps from database

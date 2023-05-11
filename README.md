@@ -14,7 +14,8 @@ http://localhost:('PORT')/
 
 
 ## Pending TODOs
-
+- Tags have been implemented, but the application currently does not utilize them in any way
+- In the future, tags will be used to notify relevant users by email (Using an external API like Twilio)
 
 
 ## Built with

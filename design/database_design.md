@@ -12,3 +12,4 @@ id: SERIAL
 time: date
 content: text
 account_id: FOREIGN KEY > accounts_id
+sub_peeps: text

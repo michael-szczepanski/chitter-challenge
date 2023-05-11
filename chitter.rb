@@ -49,6 +49,16 @@ class Chitter < Sinatra::Base
     redirect '/'
   end
 
+  post '/reply_to' do
+    peep_repo = PeepRepository.new
+    time = Time.now
+    content = params[:content]
+    peep = Peep.new(time, content, session[:user].nil? ? 1 : session[:user].id)
+    id = peep_repo.add(peep)["max"].to_i
+    peep_repo.add_sub_peep(params[:id], id)
+    redirect '/'
+  end
+
   post '/new_user' do
     account_repo = AccountRepository.new
     username = params[:username]
@@ -68,7 +78,6 @@ class Chitter < Sinatra::Base
       flash[:email] = "This email is already in use" unless email_valid
       redirect '/sign_up'
     end
-
   end
 
   post '/log_in' do

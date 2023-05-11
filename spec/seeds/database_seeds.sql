@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS peeps (
   time timestamp,
   content text,
   account_id int,
+  sub_peeps text,
   constraint fk_accounts foreign key(account_id) references accounts(id) on delete cascade
 );
 
@@ -25,6 +26,6 @@ INSERT INTO accounts
 ('Ruby', 'ruby', 'ruby@ruby.ruby', 'ruby1');
 
 INSERT INTO peeps
-(time, content, account_id) VALUES
-('2023-05-04 12:45:12', 'Mikes peep', 2),
-('2023-05-05 11:55:43', 'Rubys peep', 3);
+(time, content, account_id, sub_peeps) VALUES
+('2023-05-04 12:45:12', 'Mikes peep', 2, ''),
+('2023-05-05 11:55:43', 'Rubys peep', 3, '');
