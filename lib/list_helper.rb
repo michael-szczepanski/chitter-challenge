@@ -1,35 +1,58 @@
 require_relative './peep_repository'
+require_relative './account_repository'
 
 module ListHelper
-  def generate_peep_list(peeps, tab_size="")
+
+  def gen_peep_list(peeps, tab_size)
     # Takes an array of peep objects
     # Generates a html string representation of the list of peeps and sub peeps
     # Returns a string
-    tab = "" * tab_size
+    html = ""
+    tab = "&ensp;" * tab_size
     for peep in peeps do
-      html = peep_string(peep, tab)
-      if !peep.sub_peeps.empty?
-        for sub_peep_id in peep.sub_peeps do
-          repo = PeepRepository.new
-          html << peep_string(repo.find_by_id(sub_peep_id), tab_size + 4)
-          peeps.delete_id { |peep| peep.id = sub_peep_id }
-        end
-      end
-    end 
+      next if sub_peep?(peep, peeps)
+      html << peep_string(peep, tab_size)
+      html << gen_sub_peep_list(peep.sub_peeps, tab_size) unless peep.sub_peeps.empty?
+    end
+    return html
   end
 
-  private 
+  private
+
+  def sub_peep?(peep, peeps)
+    # Iterates through peeps array and returns true if peep.id is found
+    # in any of the peep.sub_peeps arrays
+    # Returns false otherwise
+    for entry in peeps
+      return true if entry.sub_peeps.include?(peep.id.to_s)
+    end
+    return false
+  end
   
-  def peep_string(peep, tab)
+  def gen_sub_peep_list(peep_ids, tab_size)
     html = ""
-    html << "#{tab}<span><%= #{peep.time} %></span><br>"
-    html << "#{tab}<span class='simpleborder'><%= @accounts[#{peep.account_id}] %></span><br>"
-    html << "#{tab}<div class='simpleborder'>#{peep.content}</div>"
-    html << "#{tab}<form action='/reply_to' method='POST'>"
-    html << "#{tab}<input type='hidden' name='id' value=#{peep.id}>"
-    html << "#{tab}<input type='text' name='content' placeholder='Reply to this peep'"
-    html << "#{tab}oninvalid='alert('You must write something to post it')' required>"
-    html << "#{tab}<input type='submit' value='Submit'/>"
-    html << "#{tab}</form>"
+    tab_size += 4
+    tab = "&ensp;" * tab_size
+    for peep_id in peep_ids do
+      repo = PeepRepository.new
+      peep = repo.find_by_id(peep_id)
+      html << peep_string(peep, tab_size)
+      html << gen_sub_peep_list(peep.sub_peeps, tab_size) unless peep.sub_peeps.empty?
+    end
     return html
+  end
+  
+  def peep_string(peep, tab_size)
+    tab = "&ensp;" * tab_size 
+    repo = AccountRepository.new
+    return "#{tab}<div class='simpleborder'>
+      #{repo.find_by_id(peep.account_id)} on #{peep.time.strftime("%d/%m/%Y at %k:%M")}<br><br>
+      #{peep.content}<br><br>
+      <form action='/reply_to' method='POST'>
+      <input type='hidden' name='id' value=#{peep.id}>
+      <input type='text' name='content' placeholder='Reply to this peep'
+      oninvalid='alert('You must write something to post it')' required>
+      <input type='submit' value='Submit'/></form></div><br>"
+  end
+
 end

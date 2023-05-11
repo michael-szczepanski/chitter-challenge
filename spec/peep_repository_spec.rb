@@ -26,6 +26,7 @@ RSpec.describe PeepRepository do
       expect(peeps.last.content).to eq 'Mikes peep'
       expect(peeps.last.account_id).to eq 2
       expect(peeps.last.tags).to eq []
+      expect(peeps.last.sub_peeps).to eq ['3']
     end
 
     it 'returns a single peep with correct id' do
@@ -36,17 +37,16 @@ RSpec.describe PeepRepository do
       expect(peep.content).to eq 'Mikes peep'
       expect(peep.account_id).to eq 2
       expect(peep.tags).to eq []
-      expect(peep.sub_peeps).to eq []
+      expect(peep.sub_peeps).to eq ['3']
     end
   end
 
   context 'UPDATE' do
     it 'adds a sub_peep to entry' do
       repo = PeepRepository.new
-      repo.add_sub_peep(1, 2)
-      repo.add_sub_peep(1, 3)
+      repo.add_sub_peep(1, 4)
       peep = repo.find_by_id(1)
-      expect(peep.sub_peeps).to eq ['2', '3']
+      expect(peep.sub_peeps).to eq ['3', '4']
     end
   end
 end

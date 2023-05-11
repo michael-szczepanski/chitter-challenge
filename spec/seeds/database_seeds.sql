@@ -27,5 +27,6 @@ INSERT INTO accounts
 
 INSERT INTO peeps
 (time, content, account_id, sub_peeps) VALUES
-('2023-05-04 12:45:12', 'Mikes peep', 2, ''),
-('2023-05-05 11:55:43', 'Rubys peep', 3, '');
+('2023-05-04 12:45:12', 'Mikes peep', 2, '3'),
+('2023-05-05 11:55:43', 'Rubys peep', 3, ''),
+('2023-05-11 14:39:00', 'Say cheese!', 1, '');

@@ -8,4 +8,7 @@ class Account
     @password = password
   end
 
+  def to_s
+    return "#{@name} (#{@username})"
+  end
 end

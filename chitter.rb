@@ -1,6 +1,7 @@
 require 'sinatra'
 require 'sinatra/reloader'
 require 'sinatra/flash'
+require_relative './lib/list_helper'
 require_relative './lib/database_connection'
 require_relative './lib/peep'
 require_relative './lib/peep_repository'
@@ -10,23 +11,21 @@ require_relative './lib/account'
 DatabaseConnection.connect
 
 class Chitter < Sinatra::Base
-
-  enable :sessions
-
   configure :development do
     register Sinatra::Reloader
     register Sinatra::Flash
-    # also_reload lib/peep_repository
-    # also_reload lib/account_repository
+    include ListHelper
+    enable :sessions
   end
 
   get '/' do
     peep_repo = PeepRepository.new
     account_repo = AccountRepository.new
     session[:user] = AccountRepository.new.find_by_id(1) if session[:user].nil?
-    @peeps = peep_repo.list_peeps
+    peeps = peep_repo.list_peeps
     @accounts = account_repo.read_id_user_pairs
     @user = session[:user]
+    @peeps = gen_peep_list(peeps, 1)
     
     return erb(:main_page)
   end
@@ -99,5 +98,3 @@ class Chitter < Sinatra::Base
   end
 
 end
-
-

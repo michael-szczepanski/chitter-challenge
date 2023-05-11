@@ -8,10 +8,11 @@
 
     .simpleborder {
       border-color: black;
-      border-style: solid;
+      border-style: dotted;
       border-width: 1px;
       margin: 5px;
       padding: 2px;
+      display: inline-block;
     }
   </style>
 
@@ -36,27 +37,17 @@
     <% end %>
 
     <h2>Post to Chitter:</h2>
-    <h3>Use @username to tag another user in your post</h3>
+    <!-- TODO: Implement tagging in posts -->
+    <!-- <h3>Use @username to tag another user in your post</h3> -->
     <form method="POST" action="/new_peep">
       <input type="text" name="content" placeholder="What is on your mind?"
         oninvalid="alert('You must write something to post it')" required>
       <input type="submit" name="Post to Chitter">
     </form>
 
-<!-- TODO: Tweet replies -->
     <h2>See what people are talking about:</h2>
       <input type="button" value="Refresh peeps" onClick="window.location.reload()"><br>
-      <% for peep in @peeps %>
-        <span><%= peep.time %></span><br>
-        <span class="simpleborder"><%= @accounts[peep.account_id] %></span><br>
-        <div class='simpleborder'><%= peep.content %></div>
-        <form action="/reply_to" method="POST">
-          <input type="hidden" name="id" value="<%= peep.id %>">
-          <input type="text" name="content" placeholder="Reply to this peep" 
-            oninvalid="alert('You must write something to post it')" required>
-          <input type="submit" value="Submit"/>
-        </form>
-      <% end %>
+      <%= @peeps %>
   </body>
 
 </html>

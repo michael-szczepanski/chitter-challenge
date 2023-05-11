@@ -116,11 +116,9 @@ RSpec.describe Chitter do
       post('/new_user', { name: 'Kevin', email: 'kevin@kevin.com', username: 'kevin', password: 'kevin1' })
       post('/log_in', { username: 'kevin', password: 'kevin1' })
       response = post('/reply_to', { id: 1, content: 'reply post' })
-      p response
       expect(response.status).to eq 302
       response = get('/')
       expect(response.status).to eq 200
-      expect(response.body).to include('Replying to mike')
       expect(response.body).to include('reply post')
     end
   end

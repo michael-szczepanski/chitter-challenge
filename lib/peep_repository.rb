@@ -51,9 +51,8 @@ class PeepRepository
     peeps = []
     for entry in entries do
       time = Time.parse(entry['time'])
-      content = entry['content']
       account_id = entry['account_id'].to_i
-      peep = Peep.new(time, content, account_id)
+      peep = Peep.new(time, entry['content'], account_id)
       peep.id = entry['id'].to_i
       peep.sub_peeps = entry['sub_peeps'].split(",")
       peeps << peep
